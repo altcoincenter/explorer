@@ -16,6 +16,7 @@ html
     script(src='//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js')  
     script(src='//cdn.datatables.net/responsive/1.0.1/js/dataTables.responsive.js')
     script(src='//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js')
+    script(src="/javascripts/chart.js")
     script.
       $(document).ready(function(){   
         $('#loading-icon').hide();       
@@ -50,6 +51,17 @@ html
                 a.navbar-link(href='/') 
                   span.glyphicon.glyphicon-search
                   span.menu-text #{settings.locale.menu_explorer}
+            if settings.heavy == true
+              if active == 'heavy'
+                li.active
+                  a.navbar-link(href='/heavy')
+                    span.glyphicon.glyphicon-transfer
+                    span.menu-text #{settings.locale.menu_heavy}
+              else
+                li
+                  a.navbar-link(href='/heavy')
+                    span.glyphicon.glyphicon-transfer
+                    span.menu-text #{settings.locale.menu_heavy}
             if settings.display.markets == true
               if active == 'markets'
                 li.active

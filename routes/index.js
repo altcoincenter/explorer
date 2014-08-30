@@ -55,6 +55,14 @@ router.get('/info', function(req, res) {
   });
 });
 
+router.get('/heavy', function(req, res) {
+  db.get_stats(settings.coin, function(stats){
+    db.get_votes( function (votes) {
+      res.render('heavy', { active: 'heavy', stats: stats, votes: votes });
+    });
+  });
+});
+
 router.get('/bittrex', function(req, res) {
   if (settings.display.markets == true ) {   
     prepare_bittrex_data(function(bittrex_data) {

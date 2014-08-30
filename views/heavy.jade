@@ -1,0 +1,121 @@
+extends layout
+
+block content
+  .page-header
+    h2 Block Reward 
+      small voting information
+    table.table.pull-right(style="width:30%;margin-top:-65px;")
+      thead
+        tr
+          th Current Supply (#{symbol})
+          th Coin Cap (#{symbol})
+      tbody
+        tr
+          td 
+            =stats.supply 
+          td
+            =stats.cap 
+  - function compare(a,b) {
+    - if (a.count < b.count)
+      - return -1;
+    - if (a.count > b.count)
+      - return 1;
+    - return 0;
+  - }
+
+  - votes.sort(compare);         
+  .row
+    .col-md-3.col-md-offset-2
+      form
+        table.table
+          thead
+            tbody               
+              tr
+                th Phase
+                td 
+                  =stats.phase
+              tr
+                th Max Vote
+                td 
+                  =stats.maxvote
+              tr
+                th Reward
+                td
+                  =stats.reward   
+              tr
+                th Est. Next
+                td
+                  =stats.estnext
+    .col-md-2
+      center
+        canvas(id="myChart2", width="150", height="150")
+          script.
+            var ctx = document.getElementById("myChart2").getContext("2d");
+            var data = [
+              {
+                value: ((#{stats.count}/3600)%1)*100,
+                color: "rgba(151,187,205,0.5)"
+              },
+              {
+                value : (1-((#{stats.count}/3600)%1))*100,
+                color : "#000000"
+              }
+            ]
+            new Chart(ctx).Doughnut(data); 
+        h5 Reward change in approximately
+        h5
+          =stats.nextin
+    .col-md-3
+      form
+        table.table
+          thead
+            tbody     
+              tr
+                th Key
+                td   
+              tr
+                th Vote
+                td 
+                  div(style="width:20px;height:20px;background-color:rgba(220,220,220,0.5)")           
+              tr
+                th Current Reward
+                td 
+                  div(style="width:20px;height:20px;background-color:#000000")   
+              tr
+                th Est. Next
+                td
+                  div(style="width:20px;height:20px;background-color:rgba(151,187,205,0.5)")   
+  .row
+    .col-md-10.col-md-offset-1
+      center
+        canvas(id="myChart", width="800", height="300", style="margin-left:-30px;")
+          script.
+
+            var ctx = document.getElementById("myChart").getContext("2d");
+            var options = {
+              scaleOverride : true,
+              scaleSteps : 8,
+              scaleStepWidth : 128,
+              scaleStartValue : 0,
+              bezierCurve : false,
+            }
+            var data = {
+              labels : [#{votes[0].count},#{votes[1].count},#{votes[2].count},#{votes[3].count},#{votes[4].count},#{votes[5].count},#{votes[6].count},#{votes[7].count},#{votes[8].count},#{votes[9].count},#{votes[10].count},#{votes[11].count},#{votes[12].count},#{votes[13].count},#{votes[14].count},#{votes[15].count},#{votes[16].count},#{votes[17].count},#{votes[18].count},#{votes[19].count}],
+              datasets : [
+                {
+                  fillColor : "rgba(220,220,220,0.5)",
+                  strokeColor : "rgba(220,220,220,0.8)",
+                  pointColor : "rgba(220,220,220,1)",
+                  pointStrokeColor : "#fff",
+                  data : [#{votes[0].vote},#{votes[1].vote},#{votes[2].vote},#{votes[3].vote},#{votes[4].vote},#{votes[5].vote},#{votes[6].vote},#{votes[7].vote},#{votes[8].vote},#{votes[9].vote},#{votes[10].vote},#{votes[11].vote},#{votes[12].vote},#{votes[13].vote},#{votes[14].vote},#{votes[15].vote},#{votes[16].vote},#{votes[17].vote},#{votes[18].vote},#{votes[19].vote}]
+                },
+                {
+                  fillColor : "rgba(151,187,205,0.0)",
+                  strokeColor : "rgba(0,0,0,1)",
+                  pointColor : "rgba(0,0,255,0)",
+                  pointStrokeColor : "rgba(255,255,255,0.0)",
+                  data : [#{votes[0].reward},#{votes[1].reward},#{votes[2].reward},#{votes[3].reward},#{votes[4].reward},#{votes[5].reward},#{votes[6].reward},#{votes[7].reward},#{votes[8].reward},#{votes[9].reward},#{votes[10].reward},#{votes[11].reward},#{votes[12].reward},#{votes[13].reward},#{votes[14].reward},#{votes[15].reward},#{votes[16].reward},#{votes[17].reward},#{votes[18].reward},#{votes[19].reward}]
+                },
+              ]
+            }
+            var myNewChart = new Chart(ctx).Line(data,options);
