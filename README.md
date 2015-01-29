@@ -1,5 +1,4 @@
 Altcoin.Center's fork of 
-
 Iquidus Explorer - 1.4.0
 ================
 
