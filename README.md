@@ -1,7 +1,13 @@
+Altcoin.Center's fork of 
+
 Iquidus Explorer - 1.4.0
 ================
 
 An open source block explorer written in node.js.
+
+Altcoin.Center will be adding some basic necessities, such as database authentication etc.
+
+We'll ask for a pull from upstream when something useful is available.
 
 ### Links
 
